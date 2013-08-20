@@ -1,0 +1,10 @@
+<resources>
+
+    <string-array name="cache_mode">
+        <item>LOAD_CACHE_ELSE_NETWORK</item>
+        <item>LOAD_CACHE_ONLY</item>
+        <item>LOAD_DEFAULT</item>
+        <item>LOAD_NO_CACHE</item>
+    </string-array>
+
+</resources>

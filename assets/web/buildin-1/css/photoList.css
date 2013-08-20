@@ -1,0 +1,348 @@
+/*
+Theme Name: JS Mix Photo
+*/
+html{
+	background:#222;
+	-webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    min-height: 100%;
+}
+
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td,hr,button,article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section {
+	margin:0;padding:0;
+}
+
+article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section { 
+    display:block;
+}
+
+audio,canvas,video {
+    display: inline-block;*display: inline;*zoom: 1;
+}
+
+body,button,input,select,textarea{
+	font:12px/1.5 tahoma,arial,\5b8b\4f53;
+}
+input,select,textarea{
+	font-size:100%;
+}
+
+table{
+	border-collapse:collapse;border-spacing:0;
+}
+
+th{
+	text-align:inherit;
+}
+
+fieldset,img{
+	border:0;
+}
+
+iframe{
+	display:block;
+}
+
+abbr,acronym{
+	border:0;font-variant:normal;
+}
+
+del {
+	text-decoration:line-through;
+}
+
+address,caption,cite,code,dfn,em,th,var {
+	font-style:normal;
+	font-weight:500;
+}
+
+/* 去掉列表前的标识, li 会继承 */
+ol,ul {
+	list-style:none;
+}
+
+q:before,q:after {
+	content:'';
+}
+
+sub, sup {
+    font-size: 75%; line-height: 0; position: relative; vertical-align: baseline;
+}
+sup {top: -0.5em;}
+sub {bottom: -0.25em;}
+
+a:hover {
+	text-decoration:underline;
+}
+a:focus{
+	outline:none;
+}
+ins,a {
+	text-decoration:none;
+}
+
+.clearfix:after {
+	visibility:hidden;
+	display:block;
+	font-size:0;
+	content:" ";
+	clear:both;
+	height:0;
+}
+.clearfix {
+	zoom:1;
+}
+
+body .hide {
+	display:none;
+}
+
+.f_left,.f_right {
+	display:inline;
+}
+.f_left {
+	float:left;
+}
+.f_right {
+	float:right;
+}
+/*-----------------------------------------------------------------------------------*
+/* = Body, Common Classes & Wrap
+/*-----------------------------------------------------------------------------------*/
+body, html{
+    width: 100%;
+    min-height: 100%;
+}
+body {
+    background: #222;
+    color: #CCC;
+    font-family:'Century Gothic',"Microsoft YaHei",Trebuchet MS,Arial,Verdana,Tahoma,sans-serif;
+}
+a {
+    text-decoration: none;
+    color: #7da1bc;
+	-webkit-transition: background 0.2s ease-in-out;
+    -moz-transition: background 0.2s ease-in-out;
+    -o-transition: background 0.2s ease-in-out;
+    -ms-transition: background 0.2s ease-in-out;
+    transition: background 0.2s ease-in-out;
+}
+a:hover {
+    text-decoration: none;
+	color: #D711BC;
+}
+
+
+
+
+
+
+/*-----------------------------------------------------------------------------------*
+/* = Structure
+/*-----------------------------------------------------------------------------------*/
+
+/*-----------------------------------------------------------------------------------*
+/* = Headings
+/*-----------------------------------------------------------------------------------*/
+
+h1,
+h2,
+h3,
+h4 {
+    color: #ccc;
+    line-height: 1.5em;
+	font-weight: bold;
+	font-family: 'Century Gothic',"Microsoft YaHei",Trebuchet MS,Arial,Verdana,Tahoma,sans-serif;
+}
+h1 {
+    font-size: 24px;
+}
+h2 { font-size: 18px }
+h3 { font-size: 16px }
+h4 { font-size: 14px; }
+h2,
+h3,
+h4 {
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+h1 a,
+h2 a,
+h3 a,
+h4 a { color: #ccc }
+h2 a:hover,
+h3 a:hover,
+h4 a:hover { color: #D711BC; text-decoration: none; }
+
+
+#wrapper{
+    margin: 0 auto;
+    width: 100%;
+    overflow:hidden;
+    padding-top:20px;
+}
+#header{
+	padding:20px;
+}
+#header h1{
+    padding-left:20px;
+}
+#site-intro{
+	padding:0 0 10px 20px;
+	height:36px;
+	line-height:36px;
+}
+#logo{
+	display:inline-block;
+	background:url(../images/logo.png) no-repeat;
+	background-size:cover;
+	width: 130px;
+    height: 40px;
+	text-indent:-9999px;
+	overflow:hidden;
+}
+.site_version{
+	font-weight: normal;
+	font-size:12px;
+	padding-left:5px;
+}
+.site_version em{
+	color:#D711BC;
+	font-size:16px;
+	font-weight:bold;
+	padding:0 5px;
+}
+
+
+/*-----------------------------------------------------------------------------------*
+/* = Posts & Pages
+/*-----------------------------------------------------------------------------------*/
+.post{
+	background: url(../images/lines_grey.png) repeat;
+}
+.post_nav{
+	margin-bottom:10px;
+}
+#post_title{
+	height:36px;
+	line-height:36px;
+	padding: 0 30px;
+	background:#1c1c1c;
+}
+
+#setsContainer {
+    width: 100%;
+    overflow:hidden;
+    position:relative;
+}
+.pin{
+    padding: 15px 5px;
+    position:absolute;
+    left:0;
+    top:0;
+    -webkit-transition: -webkit-transform .4s ease-out;
+    width:230px;
+}
+.pin .pin-content{
+    box-shadow:0px 2px 5px 0 rgb(0,0,0);
+    border-radius: 0 0 5px 5px;
+    background: rgb(31,31,31);
+    overflow:hidden;
+    display:block;
+    line-height:0;
+    color:#fff;
+}
+.pin img{
+    border-bottom: 1px solid #fff;
+    opacity:0;
+    -webkit-transition: opacity 1s ease-out;
+}
+.pin img.loaded{
+    opacity:1;
+}
+.pin .pin-desc{
+    padding:1.5em;
+}
+
+
+
+
+.entry {
+	margin: 0 auto 20px;
+	padding: 20px;
+	overflow:hidden;
+}
+
+.entry ul,
+.entry ol {
+    margin-left: 30px;
+    margin-bottom: 10px;
+}
+/*thumbnail*/
+.post-thumbnail{
+	margin-bottom: 10px;
+}
+
+#exifBtn{
+	padding-left:20px;
+	margin-left:20px;
+}
+#exifBtn.loading{
+	background:url(../images/loading_s_white.gif) no-repeat;
+}
+
+#photo_extra{
+	padding:10px 0;
+	text-align:right;
+	display:none;
+}
+#exif_info{
+	padding-top:10px;
+}
+#exif_info li{
+	cursor:default;
+}
+#exif_info li:hover{
+	color:#fff;
+}
+
+
+/*-----------------------------------------------------------------------------------*
+/* = Copyright
+/*-----------------------------------------------------------------------------------*/
+#copyright {
+	margin: 0 auto;
+    padding: 30px 20px 10px 0;
+    text-align: right;
+    font-size: 10px;
+}
+#copyright a{
+	color: #999;
+}
+#copyright a:hover{
+	color: #333;
+	text-decoration: underline;
+}
+
+
+
+/*
+#activePhoto-wrapper{
+	width:1024px;
+	font-size:0;
+	line-height:0;
+}
+
+
+
+
+#thumbnail-wrapper img{
+	opacity:.7;
+}
+.thumbnail-list{
+	height:75px;
+	width:75px;
+	overflow:hidden;
+	padding:5px 0;
+}
+*/

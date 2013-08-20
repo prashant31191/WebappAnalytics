@@ -1,0 +1,19 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/option_reload_page"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="刷新页面"/>
+    <item
+        android:id="@+id/option_cookie_mng"
+        android:orderInCategory="101"
+        android:showAsAction="never"
+        android:title="Cookie 管理"/>
+    <item
+        android:id="@+id/returnToHome"
+        android:orderInCategory="102"
+        android:showAsAction="never"
+        android:title="返回首页"/>
+
+</menu>
