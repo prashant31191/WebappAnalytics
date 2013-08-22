@@ -1,79 +1,103 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity" >
 
-    <EditText
-        android:id="@+id/urlInput"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="type url here..."
-        android:singleLine="true"
-        android:text="http://www.baidu.com" />
-
     <LinearLayout
-        android:layout_width="match_parent"
+        android:id="@+id/url_line"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:paddingLeft="5sp"
-        android:paddingRight="5sp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal" >
 
-        <TextView 
+        <EditText
+            android:id="@+id/url_edit_text"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_marginRight="10dp"
+            android:layout_height="wrap_content"
+            android:hint="type url here..."
+            android:singleLine="true"
+            android:inputType="textUri"
+            android:text="http://www.baidu.com" />
+
+        <Button
+            android:id="@+id/get_qr_url_btn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/camera" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/cache_mode_line"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/url_line"
+        android:layout_marginBottom="5dp"
+        android:orientation="horizontal"
+        android:paddingLeft="5sp"
+        android:paddingRight="5sp" >
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left|center_vertical"
             android:layout_marginRight="5sp"
+            android:text="Cache Mode: "
             android:textColor="#333333"
-            android:textSize="16sp"
-            android:text="Cache Mode: " />
+            android:textSize="16sp" />
 
         <Spinner
-            android:id="@+id/cacheModeSpinner"
-            android:spinnerMode="dialog"
+            android:id="@+id/cache_mode_spinner"
+            android:layout_width="0sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:prompt="@string/set_cache_mode"
-            android:layout_width="0sp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:spinnerMode="dialog" />
     </LinearLayout>
-    
-    
+
     <LinearLayout
+        android:id="@+id/user_agent_line"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/cache_mode_line"
         android:layout_marginBottom="5dp"
+        android:orientation="horizontal"
         android:paddingLeft="5sp"
-        android:paddingRight="5sp"
-        android:orientation="horizontal" >
+        android:paddingRight="5sp" >
 
-        <TextView 
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left|center_vertical"
             android:layout_marginRight="5sp"
+            android:text="UserAgent: "
             android:textColor="#333333"
-            android:textSize="16sp"
-            android:text="UserAgent: " />
+            android:textSize="16sp" />
 
         <Spinner
-            android:id="@+id/userAgentSpinner"
-            android:spinnerMode="dialog"
-            android:prompt="@string/set_ua"
+            android:id="@+id/user_agent_spinner"
             android:layout_width="0sp"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:prompt="@string/set_ua"
+            android:spinnerMode="dialog" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/main_action_line"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/user_agent_line"
         android:layout_marginBottom="10dp"
         android:orientation="horizontal" >
 
         <Button
-            android:id="@+id/urlConfirmButton"
+            android:id="@+id/url_confirm_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -81,7 +105,7 @@
             android:text="Browse" />
 
         <Button
-            android:id="@+id/urlClearButton"
+            android:id="@+id/url_clear_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -89,12 +113,12 @@
             android:onClick="clearUrlText"
             android:text="Clear" />
     </LinearLayout>
-	
+
     <Button
         android:id="@+id/load_test_confirm"
-        android:layout_width="fill_parent" 
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="load 耗时测试"
-        />
-    
-</LinearLayout>
+        android:layout_below="@id/main_action_line"
+        android:text="load 耗时测试" />
+
+</RelativeLayout>
