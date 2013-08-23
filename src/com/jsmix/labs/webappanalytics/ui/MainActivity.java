@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
+import com.google.zxing.client.android.CaptureActivity;
 import com.jsmix.labs.webappanalytics.R;
 import com.jsmix.labs.webappanalytics.cache.CacheMode;
 import com.jsmix.labs.webappanalytics.cache.CacheModeOptions;
@@ -119,9 +120,11 @@ public class MainActivity extends NormalActivity {
 			// TODO
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(
-						"com.google.zxing.client.android.SCAN");
+				Intent intent = new Intent();
+				intent.setAction("com.google.zxing.client.android.SCAN");
 				intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
+				intent.setClass(MainActivity.this, CaptureActivity.class);
+				
 				startActivityForResult(intent, 0);
 			}
 		});
