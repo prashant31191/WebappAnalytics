@@ -1,22 +1,25 @@
 package com.jsmix.labs.webappanalytics.webview;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.text.StaticLayout;
 import android.util.Log;
 import android.view.Window;
+import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebStorage.QuotaUpdater;
 import android.webkit.WebView;
 
 public class MainChromeClient extends WebChromeClient {
 
-	private Activity activity = null;
+	private Context context;
 	private final static String TAG = "MainChromeClient";
 	
-	public MainChromeClient(Activity activity){
-		this.activity = activity;
+	public MainChromeClient(Context context){
+		this.context = context;
 	}
 	
 	
@@ -24,7 +27,7 @@ public class MainChromeClient extends WebChromeClient {
 	public void onProgressChanged(WebView view, int newProgress) {
 		// TODO Auto-generated method stub
 		super.onProgressChanged(view, newProgress);
-		activity.setProgress(newProgress * 100);
+		((Activity) context).setProgress(newProgress * 100);
 	}
 
 
@@ -45,7 +48,14 @@ public class MainChromeClient extends WebChromeClient {
 	@Override
 	public void onReceivedTitle(WebView view, String title) {
 		super.onReceivedTitle(view, title);
-		activity.setTitle(title);
+		((Activity) context).setTitle(title);
+	}
+	
+	@Override
+	public boolean onJsAlert(WebView view, String url, String message,
+			JsResult result) {
+				
+		return super.onJsAlert(view, url, message, result);
 	}
 	
 }

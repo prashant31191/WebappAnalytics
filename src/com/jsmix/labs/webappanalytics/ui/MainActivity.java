@@ -2,7 +2,6 @@ package com.jsmix.labs.webappanalytics.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,12 +14,14 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
-import android.widget.Toast;
 
+import com.baidu.android.pushservice.PushConstants;
+import com.baidu.android.pushservice.PushManager;
 import com.google.zxing.client.android.CaptureActivity;
 import com.jsmix.labs.webappanalytics.R;
 import com.jsmix.labs.webappanalytics.cache.CacheMode;
 import com.jsmix.labs.webappanalytics.cache.CacheModeOptions;
+import com.jsmix.labs.webappanalytics.cloudpush.Utils;
 import com.jsmix.labs.webappanalytics.ua.UserAgent;
 import com.jsmix.labs.webappanalytics.ua.UserAgentOptions;
 
@@ -39,6 +40,11 @@ public class MainActivity extends NormalActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_start);
 
+		
+		PushManager.startWork(getApplicationContext(),
+		PushConstants.LOGIN_TYPE_API_KEY, Utils.getMetaValue(this, "api_key"));
+		
+		
 		urlInput = (EditText) findViewById(R.id.url_edit_text);
 		confirmButotn = (Button) findViewById(R.id.url_confirm_button);
 

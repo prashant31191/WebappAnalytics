@@ -2,6 +2,7 @@ package com.jsmix.labs.webappanalytics.ui;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Notification;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,7 +15,6 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.Window;
 import android.webkit.WebChromeClient;
-import android.webkit.WebIconDatabase;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebView.FindListener;
@@ -22,7 +22,11 @@ import android.webkit.WebViewClient;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.baidu.android.pushservice.PushConstants;
 import com.jsmix.labs.webappanalytics.R;
+import com.jsmix.labs.webappanalytics.cloudpush.PushMessageReceiver;
+import com.jsmix.labs.webappanalytics.jsinterface.JSInterface;
+import com.jsmix.labs.webappanalytics.jsinterface.CloudNotification;
 import com.jsmix.labs.webappanalytics.util.EasyToast;
 import com.jsmix.labs.webappanalytics.webview.MainChromeClient;
 import com.jsmix.labs.webappanalytics.webview.MainWebView;
@@ -50,6 +54,7 @@ public class WebViewActivity extends NormalActivity {
 		return userPointY;
 	}
 
+	@SuppressLint("JavascriptInterface")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -61,45 +66,51 @@ public class WebViewActivity extends NormalActivity {
 		setContentView(R.layout.webview);
 
 		Intent intent = getIntent();
-		
+
 		Bundle bundle = intent.getExtras();
 		String url = bundle.getString("url");
 		String userAgentString = bundle.getString("userAgentString");
 		int cacheMode = bundle.getInt("cacheMode");
 		boolean isLoadTest = bundle.getBoolean("loadTest");
 		String buildinCase = bundle.getString("buildinCase");
-		
+
 		webView = new MainWebView(this);
-		
+
 		addContentView(webView, new RelativeLayout.LayoutParams(
 				RelativeLayout.LayoutParams.MATCH_PARENT,
 				RelativeLayout.LayoutParams.MATCH_PARENT));
 
-		if(isLoadTest){
+		if (isLoadTest) {
 			viewClient = new LoadTestWebViewClient(this);
-		}else{
+		} else {
 			viewClient = new MainWebViewClient(this);
 		}
-		
+
 		chromeClient = new MainChromeClient(this);
 
 		webView.setWebViewClient(viewClient);
 		webView.setWebChromeClient(chromeClient);
-		
+
 		WebSettings webSettings = webView.getSettings();
 		webSettings.setJavaScriptEnabled(true);
-		
+
 		webSettings.setCacheMode(cacheMode);
 
-		
-		
+		if (intent.getBooleanExtra(PushMessageReceiver.INTENT_TAG, false)) {
+			JSInterface jsInterface = new CloudNotification(
+					intent.getStringExtra(PushConstants.EXTRA_NOTIFICATION_TITLE),
+					intent.getStringExtra(PushConstants.EXTRA_NOTIFICATION_CONTENT));
+			
+			webView.addJavascriptInterface(jsInterface, "CloudNotification");
+		}
+
 		if (userAgentString != null) {
 			webSettings.setUserAgentString(userAgentString);
 		}
-		
-		if(buildinCase != null && !buildinCase.isEmpty()){
+
+		if (buildinCase != null && !buildinCase.isEmpty()) {
 			webView.loadUrl(buildinCase);
-		}else{
+		} else {
 			webView.loadUrl(url);
 		}
 

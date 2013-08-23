@@ -1,0 +1,37 @@
+
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>你有一个新的消息</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<link href="/assets/css/base.css" rel="stylesheet" />
+		<link href="/assets/css/index.css" rel="stylesheet" />
+		<style>
+			body{
+				background:#000;
+				color:#fff;
+			}
+			p{
+				color:#fff;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>大家好，我是 web 页面。。</h1>
+		<h2>我刚刚接收到了云推送的消息</h2>
+		<h2>他说：</h2>
+		<p id="content"></p>
+		<script>
+			// alert(CloudNotification);
+			// alert(CloudNotification.getTitle);
+			// alert(CloudNotification.getTitle());
+			
+			var title = CloudNotification.getTitle(),
+				content = CloudNotification.getContent();
+			
+			document.querySelector("#content").innerHTML = title + " :<br/> " + content;
+		</script>
+	</body>
+</html>
