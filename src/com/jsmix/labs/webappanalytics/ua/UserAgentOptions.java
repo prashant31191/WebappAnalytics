@@ -2,7 +2,7 @@ package com.jsmix.labs.webappanalytics.ua;
 
 import java.util.ArrayList;
 
-import com.jsmix.labs.webappanalytics.cache.CacheMode;
+import com.jsmix.labs.webappanalytics.webview.cache.CacheMode;
 
 public class UserAgentOptions extends ArrayList<UserAgent>{
 

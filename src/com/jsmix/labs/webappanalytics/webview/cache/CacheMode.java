@@ -1,4 +1,4 @@
-package com.jsmix.labs.webappanalytics.cache;
+package com.jsmix.labs.webappanalytics.webview.cache;
 
 public class CacheMode {
 	private String text;

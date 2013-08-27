@@ -2,8 +2,8 @@ package com.jsmix.labs.webappanalytics.ui;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.Notification;
 import android.content.Intent;
+import android.graphics.Picture;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -17,7 +17,7 @@ import android.view.Window;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebView.FindListener;
+import android.webkit.WebView.PictureListener;
 import android.webkit.WebViewClient;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -25,8 +25,8 @@ import android.widget.Toast;
 import com.baidu.android.pushservice.PushConstants;
 import com.jsmix.labs.webappanalytics.R;
 import com.jsmix.labs.webappanalytics.cloudpush.PushMessageReceiver;
-import com.jsmix.labs.webappanalytics.jsinterface.JSInterface;
 import com.jsmix.labs.webappanalytics.jsinterface.CloudNotification;
+import com.jsmix.labs.webappanalytics.jsinterface.JSInterface;
 import com.jsmix.labs.webappanalytics.util.EasyToast;
 import com.jsmix.labs.webappanalytics.webview.MainChromeClient;
 import com.jsmix.labs.webappanalytics.webview.MainWebView;
@@ -90,7 +90,17 @@ public class WebViewActivity extends NormalActivity {
 
 		webView.setWebViewClient(viewClient);
 		webView.setWebChromeClient(chromeClient);
-
+		
+		webView.setPictureListener(new PictureListener() {
+			
+			@Override
+			@Deprecated
+			public void onNewPicture(WebView view, Picture picture) {
+				Log.i(TAG, "onNewPicture: " + picture.getHeight());
+			}
+			
+		});
+		
 		WebSettings webSettings = webView.getSettings();
 		webSettings.setJavaScriptEnabled(true);
 

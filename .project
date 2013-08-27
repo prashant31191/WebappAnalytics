@@ -3,6 +3,7 @@
 	<name>WebappAnalytics</name>
 	<comment></comment>
 	<projects>
+		<project>CaptureActivity</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

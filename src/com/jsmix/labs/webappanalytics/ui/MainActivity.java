@@ -1,7 +1,15 @@
 package com.jsmix.labs.webappanalytics.ui;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.List;
+
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,15 +23,17 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
-import com.baidu.android.pushservice.PushConstants;
-import com.baidu.android.pushservice.PushManager;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.google.zxing.client.android.CaptureActivity;
 import com.jsmix.labs.webappanalytics.R;
-import com.jsmix.labs.webappanalytics.cache.CacheMode;
-import com.jsmix.labs.webappanalytics.cache.CacheModeOptions;
-import com.jsmix.labs.webappanalytics.cloudpush.Utils;
+import com.jsmix.labs.webappanalytics.cache.Client;
+import com.jsmix.labs.webappanalytics.cache.AssetsCacheAsyncTask;
+import com.jsmix.labs.webappanalytics.cache.CacheFile;
 import com.jsmix.labs.webappanalytics.ua.UserAgent;
 import com.jsmix.labs.webappanalytics.ua.UserAgentOptions;
+import com.jsmix.labs.webappanalytics.webview.cache.CacheMode;
+import com.jsmix.labs.webappanalytics.webview.cache.CacheModeOptions;
 
 public class MainActivity extends NormalActivity {
 
@@ -40,9 +50,13 @@ public class MainActivity extends NormalActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_start);
 
-		
+		/*
 		PushManager.startWork(getApplicationContext(),
 		PushConstants.LOGIN_TYPE_API_KEY, Utils.getMetaValue(this, "api_key"));
+		*/
+		
+		new AssetsCacheAsyncTask(this).execute();
+		
 		
 		
 		urlInput = (EditText) findViewById(R.id.url_edit_text);
@@ -64,13 +78,15 @@ public class MainActivity extends NormalActivity {
 
 	}
 
+
 	@Override
 	protected void onResume() {
 		super.onResume();
 	}
 
 	private void onConfirm() {
-		String url = urlInput.getText().toString();
+//		String url = urlInput.getText().toString();
+		String url = "http://172.22.105.244:7777/Swiper/demos/main-demos/17-responsive.html";
 
 		UserAgent userAgent = (UserAgent) userAgentSpinner.getSelectedItem();
 		CacheMode cacheMode = (CacheMode) cacheModeSpinner.getSelectedItem();
@@ -123,7 +139,6 @@ public class MainActivity extends NormalActivity {
 				});
 
 		qrButton.setOnClickListener(new OnClickListener() {
-			// TODO
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent();
