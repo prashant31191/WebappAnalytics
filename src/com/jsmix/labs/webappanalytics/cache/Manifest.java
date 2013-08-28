@@ -37,10 +37,8 @@ public class Manifest extends ArrayList<CacheFile> {
 			List<CacheFile> cacheFiles = gson.fromJson(manifeString,
 					new TypeToken<List<CacheFile>>() {
 					}.getType());
-
-			for (CacheFile cacheFile : cacheFiles) {
-				this.add(cacheFile);
-			}
+			
+			this.addAll(cacheFiles);
 
 		} catch (IOException e) {
 			e.printStackTrace();

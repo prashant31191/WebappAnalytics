@@ -22,6 +22,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -86,8 +87,8 @@ public class MainActivity extends NormalActivity {
 	}
 
 	private void onConfirm() {
-//		String url = urlInput.getText().toString();
-		String url = "http://172.22.105.244:7777/Swiper/demos/main-demos/17-responsive.html";
+		String url = urlInput.getText().toString();
+//		String url = "http://172.22.105.244:7777/Swiper/demos/main-demos/17-responsive.html";
 
 		UserAgent userAgent = (UserAgent) userAgentSpinner.getSelectedItem();
 		CacheMode cacheMode = (CacheMode) cacheModeSpinner.getSelectedItem();
@@ -151,7 +152,9 @@ public class MainActivity extends NormalActivity {
 			}
 		});
 		
-		findViewById(R.id.embedded_confirm_button).setOnClickListener(new OnClickListener() {
+		Button embedButton = (Button) findViewById(R.id.embedded_confirm_button);
+		
+		embedButton.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
@@ -159,6 +162,16 @@ public class MainActivity extends NormalActivity {
 				Log.i(TAG, "file://" + client.getAccessPath());
 				loadWebViewIntent.putExtra("buildinCase", "file://" + client.getAccessPath() + "/test.html");
 				onConfirm();
+			}
+		});
+		
+		embedButton.setOnLongClickListener(new OnLongClickListener() {
+			
+			@Override
+			public boolean onLongClick(View v) {
+				Toast.makeText(MainActivity.this, "开始更新...", Toast.LENGTH_SHORT).show();
+				new AssetsCacheAsyncTask(MainActivity.this).execute();
+				return true;
 			}
 		});
 		

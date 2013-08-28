@@ -7,7 +7,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 
-import android.R.integer;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.util.Log;
@@ -132,7 +131,6 @@ public class Client {
 	public void updateManifest(String manifestString) {
 		FileWriter fw = null;
 		try {
-			Log.i(TAG, "manifestString" + manifestString);
 			fw = new FileWriter(manifestInCachePath);
 			fw.write(manifestString);
 		} catch (IOException e) {

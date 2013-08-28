@@ -132,6 +132,13 @@ public class WebViewActivity extends NormalActivity {
 			}
 		});
 	}
+	
+	@Override
+	protected void onDestroy() {
+		Log.i(TAG, "Cache clear");
+		webView.clearCache(false);
+		super.onDestroy();
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

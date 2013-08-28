@@ -7,15 +7,15 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.nio.channels.Channels;
-import java.nio.channels.ReadableByteChannel;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.conn.ConnectTimeoutException;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.CoreConnectionPNames;
 
 import android.content.Context;
 import android.util.Log;
@@ -26,21 +26,38 @@ public class Server {
 	private static final String MANIFEST = "manifest.json";
 	private Context context;
 	private String manifestString = "";
-	
+
 	public Server(Context context) {
 		this.context = context;
 	}
 
-	private HttpEntity getManifestEntity() throws ClientProtocolException,
-			IOException {
+	private HttpEntity getManifestEntity() {
+		Log.i(TAG, "开始连接 server...");
 		HttpGet httpGet = new HttpGet(REMOTE + MANIFEST);
 		HttpClient httpClient = new DefaultHttpClient();
-		HttpResponse httpResponse = httpClient.execute(httpGet);
+		httpClient.getParams().setParameter(
+				CoreConnectionPNames.CONNECTION_TIMEOUT, 5000);
+
+		HttpResponse httpResponse = null;
 		HttpEntity httpEntity = null;
-		if (httpResponse.getStatusLine().getStatusCode() == 200) {
-			httpEntity = httpResponse.getEntity();
-		} else {
-			Log.e(TAG, "server connect fail !");
+
+		try {
+			httpResponse = httpClient.execute(httpGet);
+		} catch (ConnectTimeoutException e) {
+			Log.e(TAG, "server 连接超时..." + e.getMessage());
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+			e.getMessage();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (httpResponse == null) {
+				Log.e(TAG, "server 连接出错...");
+			} else if (httpResponse.getStatusLine().getStatusCode() == 200) {
+				httpEntity = httpResponse.getEntity();
+			} else {
+				Log.e(TAG, "server 响应状态码异常 !");
+			}
 		}
 
 		return httpEntity;
@@ -50,22 +67,27 @@ public class Server {
 		HttpEntity httpEntity;
 		Manifest manifest = null;
 		InputStream manifestInputStream = null;
-		try {
-			httpEntity = getManifestEntity();
-			manifestInputStream = httpEntity.getContent();
-			Manifest manifestInst = new Manifest();
-			manifest = manifestInst.getManifest(manifestInputStream);
-			manifestString = manifestInst.getManifeString();
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}finally{
+
+		httpEntity = getManifestEntity();
+
+		if (httpEntity != null) {
 			try {
-				manifestInputStream.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				manifestInputStream = httpEntity.getContent();
+			} catch (IllegalStateException e) {
 				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} finally {
+				if (manifestInputStream != null) {
+					Manifest manifestInst = new Manifest();
+					manifest = manifestInst.getManifest(manifestInputStream);
+					manifestString = manifestInst.getManifeString();
+					try {
+						manifestInputStream.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
 			}
 		}
 		return manifest;
@@ -92,15 +114,16 @@ public class Server {
 				if (is != null) {
 					is.close();
 				}
-			} finally {
 				if (fos != null) {
 					fos.close();
 				}
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 		}
 	}
 
-	public static void downloadFile(String newFilePath, File destFile){
+	public static void downloadFile(String newFilePath, File destFile) {
 		URL url;
 		try {
 			url = new URL(REMOTE + newFilePath);
@@ -108,7 +131,7 @@ public class Server {
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}catch (IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -116,7 +139,5 @@ public class Server {
 	public String getManifestString() {
 		return manifestString;
 	}
-	
-	
-	
+
 }

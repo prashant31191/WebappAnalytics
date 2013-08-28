@@ -127,6 +127,6 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/load_test_confirm"
-        android:text="embedded" />
+        android:text="embedded (Hold to update)" />
 
 </RelativeLayout>
