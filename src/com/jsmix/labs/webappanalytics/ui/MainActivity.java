@@ -55,7 +55,7 @@ public class MainActivity extends NormalActivity {
 		PushConstants.LOGIN_TYPE_API_KEY, Utils.getMetaValue(this, "api_key"));
 		*/
 		
-		new AssetsCacheAsyncTask(this).execute();
+		
 		
 		
 		
@@ -81,6 +81,7 @@ public class MainActivity extends NormalActivity {
 
 	@Override
 	protected void onResume() {
+		new AssetsCacheAsyncTask(this).execute();
 		super.onResume();
 	}
 
@@ -149,7 +150,18 @@ public class MainActivity extends NormalActivity {
 				startActivityForResult(intent, 0);
 			}
 		});
-
+		
+		findViewById(R.id.embedded_confirm_button).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Client client = new Client(MainActivity.this);
+				Log.i(TAG, "file://" + client.getAccessPath());
+				loadWebViewIntent.putExtra("buildinCase", "file://" + client.getAccessPath() + "/test.html");
+				onConfirm();
+			}
+		});
+		
 	}
 
 	@Override

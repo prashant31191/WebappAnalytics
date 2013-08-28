@@ -119,6 +119,14 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/main_action_line"
+		android:layout_marginBottom="10dp"
         android:text="load 耗时测试" />
+    
+    <Button
+        android:id="@+id/embedded_confirm_button"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/load_test_confirm"
+        android:text="embedded" />
 
 </RelativeLayout>

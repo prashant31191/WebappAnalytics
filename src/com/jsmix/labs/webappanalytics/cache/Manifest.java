@@ -7,10 +7,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.R.bool;
-import android.R.integer;
-import android.R.string;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -19,27 +15,26 @@ public class Manifest extends ArrayList<CacheFile> {
 
 	private static final String TAG = Manifest.class.getName();
 	private static final long serialVersionUID = -9220599891482584006L;
-	private InputStream inputStream;
-
-	public Manifest(InputStream inputStream) {
-		this.inputStream = inputStream;
+	private String manifeString = "";
+	public Manifest() {
+	
 	}
 
-	public Manifest getManifest() {
+	public Manifest getManifest(InputStream inputStream) {
 
 		BufferedReader br = null;
 		try {
 
 			br = new BufferedReader(new InputStreamReader(inputStream));
-			String jsonString = "";
+			manifeString = "";
 			String line = br.readLine();
 			while (line != null) {
-				jsonString += line;
+				manifeString += line;
 				line = br.readLine();
 			}
+			
 			Gson gson = new Gson();
-
-			List<CacheFile> cacheFiles = gson.fromJson(jsonString,
+			List<CacheFile> cacheFiles = gson.fromJson(manifeString,
 					new TypeToken<List<CacheFile>>() {
 					}.getType());
 
@@ -47,13 +42,10 @@ public class Manifest extends ArrayList<CacheFile> {
 				this.add(cacheFile);
 			}
 
-			Log.i(TAG, "Manifest 解析成功， 原始字符: " + jsonString);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
 			try {
-				if (inputStream != null)
-					inputStream.close();
 				if (br != null) {
 					br.close();
 				}
@@ -80,6 +72,10 @@ public class Manifest extends ArrayList<CacheFile> {
 			return true;
 		else
 			return false;
+	}
+
+	public String getManifeString() {
+		return manifeString;
 	}
 
 }
