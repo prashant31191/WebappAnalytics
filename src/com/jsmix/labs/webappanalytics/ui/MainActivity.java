@@ -8,6 +8,8 @@ import java.util.List;
 
 import android.content.Intent;
 import android.content.res.AssetManager;
+import android.os.AsyncTask;
+import android.os.AsyncTask.Status;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -45,6 +47,7 @@ public class MainActivity extends NormalActivity {
 	private Spinner cacheModeSpinner;
 	private Button qrButton;
 	private Intent loadWebViewIntent = new Intent();
+	private AssetsCacheAsyncTask assetsCacheAsyncTask = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +85,10 @@ public class MainActivity extends NormalActivity {
 
 	@Override
 	protected void onResume() {
-		new AssetsCacheAsyncTask(this).execute();
+		if(assetsCacheAsyncTask == null || assetsCacheAsyncTask.getStatus() == Status.FINISHED){
+			assetsCacheAsyncTask = new AssetsCacheAsyncTask(this);
+			assetsCacheAsyncTask.execute();
+		}
 		super.onResume();
 	}
 
@@ -169,8 +175,13 @@ public class MainActivity extends NormalActivity {
 			
 			@Override
 			public boolean onLongClick(View v) {
-				Toast.makeText(MainActivity.this, "开始更新...", Toast.LENGTH_SHORT).show();
-				new AssetsCacheAsyncTask(MainActivity.this).execute();
+				if(assetsCacheAsyncTask == null || assetsCacheAsyncTask.getStatus() == Status.FINISHED){
+					assetsCacheAsyncTask = new AssetsCacheAsyncTask(MainActivity.this);
+					assetsCacheAsyncTask.execute();
+					Toast.makeText(MainActivity.this, "开始更新...", Toast.LENGTH_SHORT).show();
+				}else{
+					Toast.makeText(MainActivity.this, "更新中，请稍候...", Toast.LENGTH_SHORT).show();
+				}
 				return true;
 			}
 		});
